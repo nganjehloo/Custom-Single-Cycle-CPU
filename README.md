@@ -10,12 +10,21 @@ statements in ram.sv. Then compile and run modelsim
 
 
 R-Type ​:
+
 ​ 4 bit opcode | Reg1: 2 bits | Reg2: 3 bits ::
+
 ​ Example: CMP $r0, $r1 
+
+
 A-Type ​:
+
 ​ 4 bit opcode | Reg1: 5 bits ::
+
 ​ Example: ADD $r0 
+
+
 I-Type ​: 4 bit opcode | Imm 5 bits ::
+
 ​ Example: SMA 31 
  
 ![alt text](https://raw.githubusercontent.com/nganjehloo/Custom-Single-Cycle-CPU/master/usage.png)

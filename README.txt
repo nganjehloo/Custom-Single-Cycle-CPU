@@ -18,4 +18,4 @@ A-Type ​:
 I-Type ​: 4 bit opcode | Imm 5 bits ::
 ​ Example: SMA 31 
  
- 
+[alt text](http://url/to/img.png)

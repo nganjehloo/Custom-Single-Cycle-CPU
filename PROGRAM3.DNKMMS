@@ -1,0 +1,104 @@
+SMA 1
+LW	$r0
+SMA	2
+LW	$r4
+SMA 0
+MOVA $ma
+MOVR $r1
+MOVR $r12
+MOVR $r13
+CMP $r0, $r4
+STBR 2
+BR greater
+
+less_or_eq:
+SMA	1
+LW	$r4
+SMA	2
+LW	$r4
+
+greater:
+STBR 2
+BREVEN	less_eq_even
+
+less_eq_odd:		# Odd first number
+MOVA	$r12		#
+ADD	$r0		# lowproduct = lowproduct + r0
+MOVR $r12		# 
+MOVA $r13		# 
+ADD	$r1		# highproduct = highproduct + r1 (has overflow carry from r0)
+MOVR $r13		# 
+
+
+less_eq_even:		# 
+MOVA	$r0		# 
+SLL	$acc		# Shift left low bits of A	(MULT BY 2) A*2
+MOVR	$r0		# 
+MOVA $r1		# 
+SLL	$acc		# Shift left high bits of A (has overflow carry from r0)
+MOVR	$r1		# 
+
+
+SLR	$r4,		# Shift right	(DIVIDE BY 2)	
+MOVR	$r4
+CMP	$acc, $one	# B > 0
+STBR 3
+BR	greater	# Relative jump to code for smaller first number
+
+SMA	3		# 
+LW	$r4		# load C
+SMA	4		# 
+SW	$r12		# save low bits of product
+SMA	5		# 
+SW	$r13		# save high bits of product
+
+
+MOVA    $r12		# 
+MOVR    $r0		# Set low bits of A to previous product low
+MOVA	$r13		# 
+MOVR    $r1		# Set high bits of A to previous product high
+
+SMA 0
+MOVA $ma
+MOVR $r12
+MOVR $r13
+
+loop:
+STBR 2
+BREVEN even	# Detect if first number is even (and branch to that code if so)
+
+
+odd:			# Odd first number
+MOVA	$r12		# 
+ADD	$r0		# low product bits = low product bits + r2
+MOVR $r12		# 
+MOVA $r13		# 
+ADD	$r1		# high product bits = high product bits +r3 + ov
+MOVR $r13		# 
+ADD $zero
+
+even:			# 
+MOVA	$r0		# 
+SLL	$acc,		# lowA*2 Shift left	(MULT BY 2)
+MOVR	$r0		# 
+MOVA $r1		# 
+SLL	$acc		# highA*2 
+MOVR	$r1		# 
+ADD $zero
+MOVA $r1
+
+
+SLR	$r4,		# C/2 Shift right	(DIVIDE BY 2)
+MOVR	$r4
+CMP	$acc, $zero	# C > 0
+STBR 3
+BR	loop		# Relative jump to code for smaller first number
+
+
+SMA	4		# 
+SW	$r12		# store low bits of product
+SMA	5		# 
+SW	$r13		# store high bits of product
+
+
+HALT			# End of Program

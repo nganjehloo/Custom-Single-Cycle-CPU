@@ -1,0 +1,25 @@
+SMA 	6		# Set memory address to byte 6
+LW 	$r0		# Load the contents from byte 6 to a tmp register $r0, calculate 96
+SMA 	31		# Set memory address to 31 to prepare to make it 96
+MOVA $ma		# Move the contents 
+ADD 	$one		# $acc = 31 +1 =32
+ADD	$acc		# $acc += $acc
+ADD	$r2		# $acc+= $acc 
+MOVR	$r12		# Look into making $r2 = 96 at reset
+
+SMA	31		# 
+STBR	5		#branches evaluate as <
+
+str_cmp:		# 
+MOVA	$ma		# 
+ADD	$one		# 
+MOVR $ma		# i++
+LW 	$r1		# $r1 = ram[i]
+PARCMP $r0, $r1	# Increments counter if finds 4 bit pattern
+MOVA	$r12
+CMP	$ma, $acc	# i < 96
+BR	str_cmp		# 
+SMA 7
+SW  $r9
+
+HALT			# 

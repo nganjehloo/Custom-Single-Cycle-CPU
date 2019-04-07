@@ -1,0 +1,9 @@
+Shitty Single Cycle CPU
+
+1) .DNKMMS assembly programs can be opened with a text editor
+
+2) Instruction ROM is a giant switch case. To choose the program just comment out the program you don't want
+then compile the code to run in modelsim
+
+3)Values for program are initialized in RAM. You can edit inputs to program by modifying the initial begin
+statements in ram.sv. Then compile and run modelsim
